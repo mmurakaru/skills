@@ -71,3 +71,9 @@ npx skills@latest add mmurakaru/skills/improve-codebase-architecture
 ```
 npx skills@latest add mmurakaru/skills/write-a-skill
 ```
+
+**obsidian-vault** - Search, create, and manage notes in an Obsidian vault with wikilinks and index notes.
+
+```
+npx skills@latest add mmurakaru/skills/obsidian-vault
+```
