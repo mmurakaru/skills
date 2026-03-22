@@ -5,7 +5,7 @@
 **Problem:** Waiting for elements one-by-one. If the page reloads between steps, earlier waits pass but later ones see stale state.
 
 ```ts
-// Bad — each wait is independent, no retry from scratch
+// Bad - each wait is independent, no retry from scratch
 await expect(iframe).toBeVisible({ timeout: 60000 })
 await expect(body).toBeAttached({ timeout: 30000 })
 await expect(segment).toBeAttached({ timeout: 10000 })
@@ -26,7 +26,7 @@ await expect(async () => {
 **Problem:** `.isVisible()` is a one-shot boolean check with no retry. Transient states are easily missed.
 
 ```ts
-// Bad — checks once, returns false if element is mid-transition
+// Bad - checks once, returns false if element is mid-transition
 const isReady = await indicator.isVisible()
 ```
 
@@ -58,7 +58,7 @@ await expect(element).toBeVisible({ timeout: 5000 })
 **Problem:** Clicking a menu item before the dropdown is visible.
 
 ```ts
-// Bad — menu might not be rendered yet
+// Bad - menu might not be rendered yet
 await button.click()
 await menuItem.click()
 ```
@@ -76,7 +76,7 @@ await menuItem.click()
 **Problem:** `.first()` picks whichever element matches first. Under load, DOM order or timing may vary.
 
 ```ts
-// Bad — could pick the wrong element
+// Bad - could pick the wrong element
 await segments.filter({ hasText: text }).first().hover()
 ```
 
@@ -99,7 +99,7 @@ await target.hover()
 **Problem:** Iframes load asynchronously. The iframe element may be visible but its content not yet ready.
 
 ```ts
-// Bad — iframe visible doesn't mean content is loaded
+// Bad - iframe visible doesn't mean content is loaded
 await expect(iframe).toBeVisible()
 await iframe.locator('.segment').click() // fails: content not loaded
 ```

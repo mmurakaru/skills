@@ -12,7 +12,7 @@ Strip any leading `@` from the path. Call the cleaned path `SPEC`.
 
 ## Workflow
 
-Iterative loop: reproduce → diagnose → fix → verify. Repeat until stable.
+Iterative loop: reproduce -> diagnose -> fix -> verify. Repeat until stable.
 
 ### 1. Read the spec and its page objects
 
@@ -20,21 +20,9 @@ Read `SPEC` and any page objects it imports. Identify potential flakiness source
 
 ### 2. Verify local environment
 
-If the first test run fails with unexpected data (wrong segments, 502, stale state), ask the user to fully reset the mock environment. This requires a password and must be run manually:
+If the first test run fails with unexpected data (502s, stale state, wrong fixtures), ask the user to reset their local test environment before proceeding. CI always starts clean - local environments may have stale state from previous runs.
 
-```bash
-# Wipe persistent volumes (postgres, redis, etc.) to clear stale data
-docker compose -f envmocks/docker/docker-compose.yml down -v
-
-# Rebuild from scratch
-npm run setup:mock-env
-```
-
-Without `-v`, database volumes persist stale data across restarts. CI always starts clean — locally you must wipe volumes to match.
-
-Wait for the user to confirm it's done before proceeding.
-
-Also check mock isolation: if tests rely on shared default mappings (no per-test stubs), use `--workers=1`.
+Also check mock isolation: if tests rely on shared state (no per-test stubs), use `--workers=1`.
 
 ### 3. Run the stress test (baseline)
 
@@ -88,8 +76,8 @@ If failures persist, return to step 5.
 
 ## Reference
 
-- `--repeat-each=N` — run each test N times
-- `--retries=0` — disable auto-retry to expose true failures
-- `--workers=N` — parallel workers (default: 50% of CPU cores)
-- `-x` — stop on first failure
-- `--fail-on-flaky-tests` — fail if any test is flagged flaky
+- `--repeat-each=N` - run each test N times
+- `--retries=0` - disable auto-retry to expose true failures
+- `--workers=N` - parallel workers (default: 50% of CPU cores)
+- `-x` - stop on first failure
+- `--fail-on-flaky-tests` - fail if any test is flagged flaky
