@@ -1,6 +1,6 @@
 ---
 name: capture-component
-description: Capture a cropped PNG (or scroll GIF) of a Storybook component story for PR screenshots, via browser-harness CDP clip. Use when asked to screenshot/gif a component, a Storybook story, or produce PR visuals from a running Storybook.
+description: Capture a cropped PNG (or scroll GIF) of any web app UI element for PR screenshots, via browser-harness CDP clip. Use when asked to screenshot/gif a component or element, or produce PR visuals from a running app (a dev server, Storybook, or any URL).
 ---
 
 # capture-component
@@ -8,14 +8,14 @@ description: Capture a cropped PNG (or scroll GIF) of a Storybook component stor
 Crop is done **at capture time** with CDP `Page.captureScreenshot` `clip` (element bbox), not ffmpeg. ffmpeg only stitches GIF frames.
 
 ## Prereqs
-- Storybook running: `pnpm --filter <fe-pkg> storybook` → `http://localhost:6007`.
+- Target app running at a URL (any dev server; or Storybook via `pnpm --filter <fe-pkg> storybook` → `http://localhost:6007`).
 - `browser-harness` on `$PATH` (drives the user's Chrome via CDP).
 - `ffmpeg` only if making a GIF.
 
 ## Rules
 - **Never write captures into the repo.** Output to `~/Desktop/<name>-captures/` (or ask).
-- Story URL = isolated preview: `http://localhost:6007/iframe.html?id=<kebab-title>--<kebab-export>&viewMode=story` (e.g. title `Components/Lupo/ProgressQueue` + export `Scrolling` → `components-lupo-progressqueue--scrolling`).
-- Target the component by an **exact** selector (`section[aria-label="..."]`, a unique class). Generic `section`/`button`/`ul` also match Storybook chrome.
+- Point at any URL that renders the target in the state you want. For Storybook, use the isolated preview iframe: `http://localhost:6007/iframe.html?id=<kebab-title>--<kebab-export>&viewMode=story` (e.g. title `Components/Lupo/ProgressQueue` + export `Scrolling` → `components-lupo-progressqueue--scrolling`).
+- Target the component by an **exact** selector (`section[aria-label="..."]`, a unique class). Generic `section`/`button`/`ul` may also match page chrome (Storybook toolbar, app nav, etc.).
 - `cdp()` takes params as **kwargs**, not a dict: `cdp('Page.captureScreenshot', format='png', clip=clip)`.
 - `clip` from `getBoundingClientRect()`, pad ~2px (rounded corners), `scale:2` (crisp on retina ≈ 4× output).
 

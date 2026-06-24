@@ -26,7 +26,7 @@ npx skills@latest add mmurakaru/skills/pr-feedback
 npx skills@latest add mmurakaru/skills/fix-flaky-tests
 ```
 
-**capture-component** - Capture a cropped PNG (or scroll GIF) of a Storybook component story for PR screenshots.
+**capture-component** - Capture a cropped PNG (or scroll GIF) of any web app UI element for PR screenshots.
 
 ```
 npx skills@latest add mmurakaru/skills/capture-component
