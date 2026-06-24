@@ -1,5 +1,5 @@
 ---
-name: playwright-flaky-tests
+name: fix-flaky-tests
 description: Reproduce, diagnose, and fix flaky Playwright e2e tests. Use when tests pass locally but fail on CI, when investigating intermittent test failures, or when asked to harden e2e tests.
 argument-hint: "@spec-file"
 disable-model-invocation: true
