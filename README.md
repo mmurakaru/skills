@@ -4,7 +4,11 @@ A collection of agent skills that extend capabilities across planning, developme
 
 ## Planning & Design
 
-_To be filled in._
+**prior-art** - Spike a topic in its prior art and first principles before a PRD session: surfaces the established primitives, canonical prior work, and the one essential mechanism for a context/topic.
+
+```
+npx skills@latest add mmurakaru/skills/prior-art
+```
 
 ## Development
 
