@@ -42,6 +42,12 @@ npx skills@latest add mmurakaru/skills/fix-flaky-tests
 npx skills@latest add mmurakaru/skills/capture-component
 ```
 
+**no-visual-diff** - Prove a mechanical change (CSS Modules to Tailwind, refactor, dep bump) renders identically to before: a deterministic computed-style gate plus an odiff pixel backup, so any real diff routes to a designer.
+
+```
+npx skills@latest add mmurakaru/skills/no-visual-diff
+```
+
 ## Writing & Knowledge
 
 **curating-bookmarks** - Review, declutter, and reorganize Chrome bookmarks.
