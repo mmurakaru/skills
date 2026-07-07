@@ -1,6 +1,6 @@
 ---
 name: capture-component
-description: Capture a cropped PNG (or scroll GIF) of any web app UI element for PR screenshots, via browser-harness CDP clip. Use when asked to screenshot/gif a component or element, or produce PR visuals from a running app (a dev server, Storybook, or any URL).
+description: Capture a cropped PNG (or scroll GIF) of any web app UI element for PR screenshots, via browser-harness CDP clip. Use when asked to screenshot/gif a component or element, or produce PR visuals from a running app at any URL.
 ---
 
 # capture-component
@@ -8,14 +8,14 @@ description: Capture a cropped PNG (or scroll GIF) of any web app UI element for
 Crop is done **at capture time** with CDP `Page.captureScreenshot` `clip` (element bbox), not ffmpeg. ffmpeg only stitches GIF frames.
 
 ## Prereqs
-- Target app running at a URL (any dev server; or Storybook via `pnpm --filter <fe-pkg> storybook` → `http://localhost:6007`).
+- The target rendered at any URL you can open (local dev server, preview deploy, or a live site).
 - `browser-harness` on `$PATH` (drives the user's Chrome via CDP).
 - `ffmpeg` only if making a GIF.
 
 ## Rules
 - **Never write captures into the repo.** Output to `~/Desktop/<name>-captures/` (or ask).
-- Point at any URL that renders the target in the state you want. For Storybook, use the isolated preview iframe: `http://localhost:6007/iframe.html?id=<kebab-title>--<kebab-export>&viewMode=story` (e.g. title `Components/Lupo/ProgressQueue` + export `Scrolling` → `components-lupo-progressqueue--scrolling`).
-- Target the component by an **exact** selector (`section[aria-label="..."]`, a unique class). Generic `section`/`button`/`ul` may also match page chrome (Storybook toolbar, app nav, etc.).
+- Point at any URL that renders the target in the state you want. If the tooling offers an isolated preview URL (the component alone, no app chrome), prefer it.
+- Target the component by an **exact** selector (`section[aria-label="..."]`, a unique class). Generic `section`/`button`/`ul` may also match page chrome (toolbars, app nav, etc.).
 - `cdp()` takes params as **kwargs**, not a dict: `cdp('Page.captureScreenshot', format='png', clip=clip)`.
 - `clip` from `getBoundingClientRect()`, pad ~2px (rounded corners), `scale:2` (crisp on retina ≈ 4× output).
 
@@ -24,8 +24,8 @@ Crop is done **at capture time** with CDP `Page.captureScreenshot` `clip` (eleme
 browser-harness <<'PY'
 import base64, os, json, time
 out = os.path.expanduser('~/Desktop/CAP-captures'); os.makedirs(out, exist_ok=True)
-sel = 'button.bg-primary-solid'   # exact selector for the component
-new_tab('http://localhost:6007/iframe.html?id=STORY-ID&viewMode=story'); wait_for_load(); time.sleep(0.5)
+sel = '.my-component'   # exact selector for the component
+new_tab('<url>'); wait_for_load(); time.sleep(0.5)  # any URL that renders the component
 b = json.loads(js("(()=>{const e=document.querySelector('%s');const r=e.getBoundingClientRect();return JSON.stringify({x:r.left,y:r.top,w:r.width,h:r.height});})()" % sel))
 clip = {'x':b['x']-2,'y':b['y']-2,'width':b['w']+4,'height':b['h']+4,'scale':2}
 shot = cdp('Page.captureScreenshot', format='png', clip=clip, captureBeyondViewport=True)
@@ -40,7 +40,7 @@ browser-harness <<'PY'
 import base64, os, json, time
 out = os.path.expanduser('~/Desktop/CAP-captures/frames'); os.makedirs(out, exist_ok=True)
 sel = 'section[aria-label="..."]'          # wrapper to clip
-new_tab('http://localhost:6007/iframe.html?id=STORY-ID&viewMode=story'); wait_for_load(); time.sleep(0.6)
+new_tab('<url>'); wait_for_load(); time.sleep(0.6)  # any URL that renders the component
 b = json.loads(js("(()=>{const s=document.querySelector('%s');const u=s.querySelector('ul');const r=s.getBoundingClientRect();return JSON.stringify({x:r.left,y:r.top,w:r.width,h:r.height,max:u.scrollHeight-u.clientHeight});})()" % sel))
 clip = {'x':b['x']-2,'y':b['y']-2,'width':b['w']+4,'height':b['h']+4,'scale':2}
 N = 12
