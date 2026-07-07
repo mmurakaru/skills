@@ -10,6 +10,12 @@ A collection of agent skills that extend capabilities across planning, developme
 npx skills@latest add mmurakaru/skills/prior-art
 ```
 
+**digest-video** - Turn a local video into frames plus a transcript (ffmpeg + Whisper) so an agent can understand it. Use for Looms, screen recordings, or any video you want broken into snapshots and text.
+
+```
+npx skills@latest add mmurakaru/skills/digest-video
+```
+
 ## Development
 
 **pr-review** - Ranked GitHub PR review (max 3-5 findings, blocker/consideration/nit), paste-ready for GitHub. Supports a pluggable org overlay for stack-specific conventions.
