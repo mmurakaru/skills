@@ -43,3 +43,9 @@ npx skills@latest add mmurakaru/skills/capture-component
 ```
 npx skills@latest add mmurakaru/skills/curating-bookmarks
 ```
+
+**to-slack-message** - Draft a short, non-verbose Slack message from the current task: one-line intro, categorized bullets with permalinks, tagging relevant people when appropriate.
+
+```
+npx skills@latest add mmurakaru/skills/to-slack-message
+```
