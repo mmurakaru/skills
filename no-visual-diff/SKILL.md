@@ -1,6 +1,6 @@
 ---
 name: no-visual-diff
-description: Prove a mechanical change (CSS Modules → Tailwind, refactor, dep bump) renders identically to before, so any real diff routes to a designer. Use when verifying a change is visually no-op, checking before/after parity on a component, or gating a styling migration PR.
+description: Prove a code change renders identically before and after, so any real visual difference is caught and routed to a designer. Use when verifying a change is visually no-op, checking before/after parity on a component or page, or gating a refactor, dependency bump, or styling migration PR.
 ---
 
 # no-visual-diff
