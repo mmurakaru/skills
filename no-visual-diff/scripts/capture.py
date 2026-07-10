@@ -1,11 +1,20 @@
 # Capture one state: writes <OUT>.png (clipped) + <OUT>.styles.json (computed styles of the subtree).
 # Run via: URL=<url> SEL='<selector>' OUT=<path> browser-harness < capture.py
+# Optional: WAIT=<seconds> caps how long to wait for SEL to appear (default 30).
 import base64, os, json, time
 
 url = os.environ["URL"]; sel = os.environ["SEL"]; out = os.environ["OUT"]
 os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
 
-new_tab(url); wait_for_load(); time.sleep(0.5)
+new_tab(url); wait_for_load()
+# SPAs render after the load event: poll for the target instead of guessing a sleep.
+deadline = time.time() + float(os.environ.get("WAIT", "30"))
+while not js("!!document.querySelector(%r)" % sel):
+    if time.time() > deadline:
+        raise SystemExit(f"selector never appeared within WAIT: {sel}")
+    time.sleep(0.25)
+js("document.fonts.ready.then(()=>true)")  # settle web fonts before the pixel pass
+time.sleep(0.5)
 # Freeze animations/transitions/caret so the pixel pass is honest.
 js("const s=document.createElement('style');s.textContent='*{transition:none!important;animation:none!important;caret-color:transparent!important}';document.head.appendChild(s)")
 

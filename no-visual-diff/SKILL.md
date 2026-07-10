@@ -24,4 +24,4 @@ Snapshot **before you start**, do the work, snapshot **after** — one dev serve
 - `style-diff` exit 1 → prints the exact `element property: before → after` → designer decision.
 - `odiff` exit 22 → pixels moved (paint/stacking/overflow that computed styles can't see) → `Read /tmp/nvd/diff.png`.
 
-Use an **exact** selector (`section[aria-label="…"]`, unique class) — generic tags also match app chrome.
+Use an **exact** selector (`section[aria-label="…"]`, unique class) — generic tags also match app chrome. Pick one that appears with the final content (not a loading skeleton) and that your change won't rename or remove — CSS-module classes vanish in a migration.
