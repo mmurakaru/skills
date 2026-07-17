@@ -23,7 +23,8 @@ data = json.loads(js("""(()=>{
   const els=[root,...root.querySelectorAll('*')];
   const b=root.getBoundingClientRect();
   return JSON.stringify({box:{x:b.left,y:b.top,w:b.width,h:b.height},els:els.map((e,i)=>{
-    const cs=getComputedStyle(e); const o={}; for(const p of cs) o[p]=cs.getPropertyValue(p);
+    const cs=getComputedStyle(e); const o={};
+    for(const p of cs){ if(p.startsWith('--')) continue; o[p]=cs.getPropertyValue(p); }  // skip CSS custom properties (--* variables): inherited design tokens that dominate the output and are redundant with the resolved standard properties that consume them
     return {i, tag:e.tagName.toLowerCase(), styles:o};
   })});
 })()""" % sel))
