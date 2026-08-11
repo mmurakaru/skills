@@ -1,5 +1,6 @@
 ---
 name: prior-art
+license: MIT
 description: Spike a topic in its prior art and first principles before a PRD session. Surfaces the established primitives, canonical prior work, and the one essential mechanism for a context/topic.
 disable-model-invocation: true
 ---

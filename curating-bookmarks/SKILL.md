@@ -1,5 +1,6 @@
 ---
 name: curating-bookmarks
+license: MIT
 description: Review, declutter and reorganize Chrome bookmarks. Use when the user wants to audit, clean up, bulk-delete, or restructure their Chrome bookmarks.
 ---
 

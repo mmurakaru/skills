@@ -1,5 +1,6 @@
 ---
 name: capture-component
+license: MIT
 description: Capture a cropped PNG (or scroll GIF) of any web app UI element for PR screenshots, via browser-harness CDP clip. Use when asked to screenshot/gif a component or element, or produce PR visuals from a running app at any URL.
 ---
 

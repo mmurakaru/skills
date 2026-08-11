@@ -1,5 +1,6 @@
 ---
 name: digest-video
+license: MIT
 description: Turn a local video into frames plus a transcript so it can be understood. Use when the user shares a video, Loom, or screen recording and wants it broken into snapshots and text.
 ---
 

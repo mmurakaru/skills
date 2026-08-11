@@ -1,5 +1,6 @@
 ---
 name: to-slack-message
+license: MIT
 description: Draft a short Slack message from the current task. Use when the user says /to-slack-message or wants to post a concise update or set of questions to a channel.
 ---
 

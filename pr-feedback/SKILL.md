@@ -1,5 +1,6 @@
 ---
 name: pr-feedback
+license: MIT
 description: Address reviewer feedback on a PR end-to-end: verify each claim, fix, test, then wait for explicit approval before pushing and posting replies. Inverse of `pr-review`. Use when the user says "/pr-feedback", "address PR feedback", or pastes a PR link to handle the review.
 ---
 
