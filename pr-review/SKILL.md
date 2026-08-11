@@ -1,5 +1,6 @@
 ---
 name: pr-review
+license: MIT
 description: Ranked GitHub PR review (max 3-5 findings, blocker/consideration/nit). Use when the user says "/pr-review", "review this PR", "review PR <number/URL>", or asks for a quick PR review with idiomatic suggestions.
 ---
 
@@ -16,11 +17,6 @@ If an org overlay exists at `references/<org>.md`, load it first - it adds org-s
 Friendly-colleague PR review, capped at 3-5 findings, paste-ready for GitHub.
 
 **House style: ultra-minimal.** A `nit:` is one short line with maybe inline code. A `consideration:` is 1-2 sentences. A `blocker:` is 2-3 sentences plus repro and optional suggestion. GitHub already shows the file:line anchor and the diff hunk — never restate them in the comment body.
-
-## When to invoke
-
-- User says `/pr-review`, "review this PR", "review PR `<num>`", "review the PR at `<url>`".
-- User wants a quick read on a PR they're not the author of, with idiomatic suggestions.
 
 ## When NOT to invoke
 
@@ -153,30 +149,21 @@ For complex pattern searches (cross-file refactors, API usage audits), delegate 
 
 ### Tags (taxonomy)
 
-Every finding is tagged with one of three labels. **Never use `blocker:`** - even genuine bugs are framed as `suggestion:` so the tone stays collaborative.
+Every finding is tagged with one of three labels.
 
 | Tag | When | Body shape |
 |-----|------|------------|
-| `nit:` | Idiomatic / style / cleanup. Reviewer pasting it would say "totally optional." | **One short line.** Inline code only. No suggestion block unless trivially short. |
-| `consideration:` | Worth thinking about - a possible bug, a design tradeoff, a question. May or may not warrant action. | **1-2 sentences.** Optional one-liner caveat ("worth a quick repro before treating as a blocker"). Suggestion block only when the fix is unambiguous. |
-| `suggestion:` | Concrete bug or correctness issue with a fix. Used in place of `blocker:` to keep the tone collaborative. | **2-3 sentences:** what's wrong, the repro / measurable impact, and the suggested change as a ```suggestion``` block. |
+| `nit:` | Idiomatic / style / cleanup. Reviewer pasting it would say "totally optional." | **One short line.** Inline code only. |
+| `consideration:` | Worth thinking about - a possible bug, a design tradeoff, a question. May or may not warrant action. | **1-2 sentences.** Optional one-liner caveat ("worth a quick repro before treating as a blocker"). |
+| `suggestion:` | Concrete bug or correctness issue with a fix. Used in place of `blocker:`. | **2-3 sentences:** what's wrong, the repro / measurable impact, and the fix. |
 
 ### Cap
 
 Keep top 3-5 (3 if the diff is small, 5 max for larger PRs). Drop the rest. Surface the count of dropped findings: "+ N nits not surfaced - run again with `--all` if you want them."
 
-### Hedge guard (per CLAUDE.md)
-
-Every finding MUST have a concrete repro path or measurable impact. **NO findings of the form "this could be a latent bug if..." or "theoretical concern about...".** Drop hedge findings silently before they enter the candidate pool.
-
 ### Output format
 
-Each finding renders as a self-contained block the user pastes into a GitHub PR review comment at the right file:line anchor. **Ultra-minimal is mandatory.** Reviewers scan; they don't read essays. GitHub already shows the file:line anchor and the diff hunk - never restate them in the comment body.
-
-**Hard length caps per inline comment:**
-- `nit:` - one short line, e.g. `**nit:** can be written \`max-w-360\``.
-- `consideration:` - 1-2 sentences. No headers. No "current code" snippet. Permalink only if pointing to a *different* file than the one being commented on (sibling references). Optional ```suggestion``` block when the fix is one line.
-- `suggestion:` - 2-3 sentences + ```suggestion``` block. Same rules: no headers, no path repetition, no "current code" recap.
+Each finding renders as a self-contained block the user pastes into a GitHub PR review comment at the right file:line anchor. **Ultra-minimal is mandatory.** Reviewers scan; they don't read essays. GitHub already shows the file:line anchor and the diff hunk - never restate them in the comment body. Permalink only when pointing to a *different* file than the one being commented on (sibling references).
 
 **Body templates:**
 
@@ -207,9 +194,13 @@ Each finding renders as a self-contained block the user pastes into a GitHub PR 
 
 **Scannable-in-3-seconds test:** if your inline comment doesn't fit in 4 visible lines without scrolling, it's too long. Trim until it does.
 
-For multi-line changes that don't fit a single ` ```suggestion` block (suggestion blocks must replace exactly the lines being commented on), write a `.diff` file at `~/Documents/notes/current/pr-<num>-suggestion-<n>.diff` and reference it in the comment: "Diff drafted at `<path>` - apply with `git apply <path>` to review locally."
+### Committable suggestions
 
-When the finding is illustrative (proposes a new component / refactor that doesn't replace specific lines), use ` ```tsx` (or `ts` / `js`) not ` ```suggestion` - GitHub will try to apply suggestion blocks as line replacements and the anchor will be wrong.
+A fix you can express as replacement lines ships as a ` ```suggestion` block - one-click committable, whatever the tag. Prose carries only what a suggestion block cannot.
+
+- **Multi-hunk fix:** one suggestion per anchor. The first comment says "batch-apply with the N suggestions below"; the rest open `**<tag> (cont.):**`.
+- **Line outside the diff:** GitHub anchors suggestions to diff lines only - state the change in prose ("same one-word swap applies at `<path>:<line>`").
+- **Illustrative code** (new file, refactor sketch - no exact anchor): fence as ` ```tsx` / ` ```ts`. A mis-anchored suggestion block replaces the wrong lines on apply.
 
 ## Phase 8: Final assembled review note
 
