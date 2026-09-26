@@ -36,11 +36,6 @@ npx skills@latest add mmurakaru/skills/pr-feedback
 npx skills@latest add mmurakaru/skills/pr-create
 ```
 
-**fix-flaky-tests** - Reproduce, diagnose, and fix flaky Playwright e2e tests using stress testing and pattern matching.
-
-```
-npx skills@latest add mmurakaru/skills/fix-flaky-tests
-```
 
 **capture-component** - Capture a cropped PNG (or scroll GIF) of any web app UI element for PR screenshots.
 
