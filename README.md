@@ -30,6 +30,12 @@ npx skills@latest add mmurakaru/skills/pr-review
 npx skills@latest add mmurakaru/skills/pr-feedback
 ```
 
+**pr-create** - Create pull requests with a concise body, repo templates, evidence, browser auto-open, and post-creation CI monitoring.
+
+```
+npx skills@latest add mmurakaru/skills/pr-create
+```
+
 **fix-flaky-tests** - Reproduce, diagnose, and fix flaky Playwright e2e tests using stress testing and pattern matching.
 
 ```
@@ -50,14 +56,3 @@ npx skills@latest add mmurakaru/skills/no-visual-diff
 
 ## Writing & Knowledge
 
-**curating-bookmarks** - Review, declutter, and reorganize Chrome bookmarks.
-
-```
-npx skills@latest add mmurakaru/skills/curating-bookmarks
-```
-
-**to-slack-message** - Draft a short, non-verbose Slack message from the current task: one-line intro, categorized bullets with permalinks, tagging relevant people when appropriate.
-
-```
-npx skills@latest add mmurakaru/skills/to-slack-message
-```
