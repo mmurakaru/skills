@@ -5,6 +5,9 @@
 - Commits use the user's identity only - no Co-Authored-By, Signed-off-by, or Claude/Anthropic trailers.
 - Never hand-edit CHANGELOG.md or files marked auto-generated.
 - Favor quality, simplicity, robustness, scalability, and long-term maintainability over development cost.
+- Follow the repo's conventions: check how the codebase already solves the same problem, and match it before adding a new pattern or abstraction.
+- Verify technical guidance against current official documentation, internal documentation, or installed source and types.
+  Match the version in use.
 - If the user rejects a hypothesis, STOP guessing - search the web or read more code. Don't go in circles on AX-tree, DOM, or framework internals.
 - Prefer concrete code reads + web searches over speculative pattern-matching.
 - Verify technical claims against source or official docs before asserting; cite a source for stats and root causes, and state confidence.
